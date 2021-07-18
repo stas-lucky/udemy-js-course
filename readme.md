@@ -7,7 +7,7 @@
 
 **Settings**:
 
-- In setting ssearch for "Default formatter". Set default to "esbenp.prettier-vscode"
+- In setting search for "Default formatter". Set default to "esbenp.prettier-vscode"
 - Set format on save
 
 **Live server notes**
