@@ -87,21 +87,105 @@ const restaurant = {
   order: function (starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
+
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = "20:00",
+    address,
+  }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`Here is your pasta with ${ing1}, ${ing2}, ${ing3}`);
+  },
+
+  orderPizza: function (mainIngridient, ...otherIngridients) {
+    console.log(mainIngridient);
+    console.log(otherIngridients);
+  },
 };
 
-// const { name, openingHours, categories } = restaurant;
-// console.log(name, openingHours, categories);
+restaurant.orderPizza("mushrooms", "onion", "olives", "extra");
 
-const {
-  name: restaurantName,
-  openingHours: hours,
-  categories: tags,
-} = restaurant;
+const newRestaurant = { ...restaurant, foundedIn: 1998, founder: "Guiseppe" };
 
-console.log(restaurantName, hours, tags);
+console.log(newRestaurant);
 
-const { menu = [], starterMenu: starters = [] } = restaurant;
-console.log(menu, starters);
+console.log({ ...restaurant });
+
+// const ingridients = [
+//   prompt("Let's make a pasta! Ingredient1?"),
+//   prompt("Ingredient 2?"),
+//   prompt("Ingredient 3?"),
+// ];
+// console.log(ingridients);
+// restaurant.orderPasta(...ingridients);
+
+const arr = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+console.log(badNewArr);
+
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+console.log(...newArr);
+
+const newMenu = [...restaurant.mainMenu, "Gnocci"];
+console.log(newMenu);
+
+const str = "Jonas";
+const letters = [...str, " ", "S."];
+console.log(letters);
+console.log(...str);
+
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(sum);
+};
+
+add(2, 3);
+
+const x = [23, 5, 7];
+add(x);
+add(...x);
+
+// restaurant.orderDelivery({
+//   time: "22:30",
+//   address: "Via del Sole",
+//   mainIndex: 2,
+//   starterIndex: 2,
+// });
+
+// // const { name, openingHours, categories } = restaurant;
+// // console.log(name, openingHours, categories);
+
+// const {
+//   name: restaurantName,
+//   openingHours: hours,
+//   categories: tags,
+// } = restaurant;
+
+// console.log(restaurantName, hours, tags);
+
+// const { menu = [], starterMenu: starters = [] } = restaurant;
+// console.log(menu, starters);
+
+// let a = 111;
+// let b = 999;
+// const obj = { a: 23, b: 7, c: 14 };
+// ({ a, b } = obj);
+// console.log(a, b);
+
+// const { openingHours } = restaurant;
+// const {
+//   fri: { open: o, close: c },
+// } = openingHours;
+// console.log(o, c);
 
 // let [main, secondary] = restaurant.categories;
 // console.log(main, secondary);
