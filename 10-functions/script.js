@@ -37,10 +37,6 @@ myFunc();
 myFunc();
 myFunc();
 
-document.querySelector(".buy").addEventListener("click", function () {
-    console.log("clicked");
-});
-
 const greet = function (greeting) {
     return function (name) {
         console.log(`${greeting} ${name}`);
@@ -89,3 +85,18 @@ book.call(eurowings, 23, "Petro");
 book.call(lufthansa, 32, "Petro");
 
 book.apply(eurowings, [66, "Stas"]);
+
+const bookEW = book.bind(eurowings);
+
+bookEW(45, "Steven");
+
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+    console.log(this);
+    this.planes++;
+    console.log(this.planes);
+};
+
+document
+    .querySelector(".buy")
+    .addEventListener("click", lufthansa.buyPlane.bind(lufthansa));
