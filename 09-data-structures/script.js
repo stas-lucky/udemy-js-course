@@ -95,68 +95,68 @@ GOOD LUCK 😀
 
 const weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 const openingHours = {
-  [weekdays[3]]: {
-    open: 12,
-    close: 22,
-  },
-  [weekdays[4]]: {
-    open: 11,
-    close: 23,
-  },
-  [weekdays[5]]: {
-    open: 0, // Open 24 hours
-    close: 24,
-  },
+    [weekdays[3]]: {
+        open: 12,
+        close: 22,
+    },
+    [weekdays[4]]: {
+        open: 11,
+        close: 23,
+    },
+    [weekdays[5]]: {
+        open: 0, // Open 24 hours
+        close: 24,
+    },
 };
 
 const restaurant = {
-  name: "Classico Italiano",
-  location: "Via Angelo Tavanti 23, Firenze, Italy",
-  categories: ["Italian", "Pizzeria", "Vegetarian", "Organic"],
-  starterMenu: ["Focaccia", "Bruschetta", "Garlic Bread", "Caprese Salad"],
-  mainMenu: ["Pizza", "Pasta", "Risotto"],
-  openingHours: openingHours,
-  test: [
-    12,
-    {
-      testObjInArray: {
-        haha: 15,
-      },
+    name: "Classico Italiano",
+    location: "Via Angelo Tavanti 23, Firenze, Italy",
+    categories: ["Italian", "Pizzeria", "Vegetarian", "Organic"],
+    starterMenu: ["Focaccia", "Bruschetta", "Garlic Bread", "Caprese Salad"],
+    mainMenu: ["Pizza", "Pasta", "Risotto"],
+    openingHours: openingHours,
+    test: [
+        12,
+        {
+            testObjInArray: {
+                haha: 15,
+            },
+        },
+    ],
+
+    order(starterIndex, mainIndex) {
+        return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
     },
-  ],
 
-  order(starterIndex, mainIndex) {
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
+    orderDelivery: function ({
+        starterIndex = 1,
+        mainIndex = 0,
+        time = "20:00",
+        address,
+    }) {
+        console.log(
+            `Order received! ${this.starterMenu[starterIndex]} ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+        );
+    },
+    orderPasta(ing1, ing2, ing3) {
+        console.log(`Here is your pasta with ${ing1}, ${ing2}, ${ing3}`);
+    },
 
-  orderDelivery: function ({
-    starterIndex = 1,
-    mainIndex = 0,
-    time = "20:00",
-    address,
-  }) {
-    console.log(
-      `Order received! ${this.starterMenu[starterIndex]} ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
-    );
-  },
-  orderPasta(ing1, ing2, ing3) {
-    console.log(`Here is your pasta with ${ing1}, ${ing2}, ${ing3}`);
-  },
-
-  orderPizza: function (mainIngridient, ...otherIngridients) {
-    console.log(mainIngridient);
-    console.log(otherIngridients);
-  },
+    orderPizza: function (mainIngridient, ...otherIngridients) {
+        console.log(mainIngridient);
+        console.log(otherIngridients);
+    },
 };
 
 const testArr = [
-  15,
-  {
-    obj: {
-      myKey: "some val",
+    15,
+    {
+        obj: {
+            myKey: "some val",
+        },
     },
-  },
-  35,
+    35,
 ];
 
 // const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
@@ -184,43 +184,43 @@ const testArr = [
 // console.log(properties);
 
 const showObjectDetails = function (obj, indent = 0) {
-  if (Array.isArray(obj)) {
-    for (const i of obj) {
-      if (typeof i == "object") {
-        showObjectDetails(i, indent);
-      } else {
-        console.log(`${" ".repeat(indent)}${i}`);
-      }
+    if (Array.isArray(obj)) {
+        for (const i of obj) {
+            if (typeof i == "object") {
+                showObjectDetails(i, indent);
+            } else {
+                console.log(`${" ".repeat(indent)}${i}`);
+            }
+        }
+    } else if (typeof obj == "object") {
+        const entries = Object.entries(obj);
+        for (const [k, v] of entries) {
+            if (Array.isArray(v)) {
+                console.log(`${" ".repeat(indent)}${k}: [`);
+                showObjectDetails(v, indent + 2);
+                console.log(`${" ".repeat(indent)}],`);
+            } else if (typeof v == "object") {
+                console.log(`${" ".repeat(indent)}${k}: {`);
+                showObjectDetails(v, indent + 2);
+                console.log(`${" ".repeat(indent)}},`);
+            } else {
+                if (typeof v == "string")
+                    console.log(`${" ".repeat(indent)}${k}: "${v}",`);
+                else console.log(`${" ".repeat(indent)}${k}: ${v},`);
+            }
+        }
     }
-  } else if (typeof obj == "object") {
-    const entries = Object.entries(obj);
-    for (const [k, v] of entries) {
-      if (Array.isArray(v)) {
-        console.log(`${" ".repeat(indent)}${k}: [`);
-        showObjectDetails(v, indent + 2);
-        console.log(`${" ".repeat(indent)}],`);
-      } else if (typeof v == "object") {
-        console.log(`${" ".repeat(indent)}${k}: {`);
-        showObjectDetails(v, indent + 2);
-        console.log(`${" ".repeat(indent)}},`);
-      } else {
-        if (typeof v == "string")
-          console.log(`${" ".repeat(indent)}${k}: "${v}",`);
-        else console.log(`${" ".repeat(indent)}${k}: ${v},`);
-      }
-    }
-  }
 
-  // if (entries.length > 0) {
-  //   for (const [k, v] of entries) {
-  //     if (Array.isArray(v)) {
-  //     } else if (typeof v == "object") {
-  //       showObjectDetails(v, indent + 2);
-  //     } else {
-  //       console.log(`${" ".repeat(indent)}${k}:${v}`);
-  //     }
-  //   }
-  // }
+    // if (entries.length > 0) {
+    //   for (const [k, v] of entries) {
+    //     if (Array.isArray(v)) {
+    //     } else if (typeof v == "object") {
+    //       showObjectDetails(v, indent + 2);
+    //     } else {
+    //       console.log(`${" ".repeat(indent)}${k}:${v}`);
+    //     }
+    //   }
+    // }
 };
 showObjectDetails(restaurant);
 showObjectDetails(testArr);
@@ -247,48 +247,48 @@ GOOD LUCK 😀
 */
 
 const game = {
-  team1: "Bayern Munich",
-  team2: "Borrussia Dortmund",
-  players: [
-    [
-      "Neuer",
-      "Pavard",
-      "Martinez",
-      "Alaba",
-      "Davies",
-      "Kimmich",
-      "Goretzka",
-      "Coman",
-      "Muller",
-      "Gnarby",
-      "Lewandowski",
+    team1: "Bayern Munich",
+    team2: "Borrussia Dortmund",
+    players: [
+        [
+            "Neuer",
+            "Pavard",
+            "Martinez",
+            "Alaba",
+            "Davies",
+            "Kimmich",
+            "Goretzka",
+            "Coman",
+            "Muller",
+            "Gnarby",
+            "Lewandowski",
+        ],
+        [
+            "Burki",
+            "Schulz",
+            "Hummels",
+            "Akanji",
+            "Hakimi",
+            "Weigl",
+            "Witsel",
+            "Hazard",
+            "Brandt",
+            "Sancho",
+            "Gotze",
+        ],
     ],
-    [
-      "Burki",
-      "Schulz",
-      "Hummels",
-      "Akanji",
-      "Hakimi",
-      "Weigl",
-      "Witsel",
-      "Hazard",
-      "Brandt",
-      "Sancho",
-      "Gotze",
-    ],
-  ],
-  score: "4:0",
-  scored: ["Lewandowski", "Gnarby", "Lewandowski", "Hummels"],
-  date: "Nov 9th, 2037",
-  odds: {
-    team1: 1.33,
-    x: 3.25,
-    team2: 6.5,
-  },
+    score: "4:0",
+    scored: ["Lewandowski", "Gnarby", "Lewandowski", "Hummels"],
+    date: "Nov 9th, 2037",
+    odds: {
+        team1: 1.33,
+        x: 3.25,
+        team2: 6.5,
+    },
 };
 
 for (const [k, player] of game.scored.entries()) {
-  console.log(`Goal ${k + 1}: ${player}`);
+    console.log(`Goal ${k + 1}: ${player}`);
 }
 
 /*
@@ -324,17 +324,17 @@ GOOD LUCK 😀
 */
 
 const gameEvents = new Map([
-  [17, "⚽️ GOAL"],
-  [36, "🔁 Substitution"],
-  [47, "⚽️ GOAL"],
-  [61, "🔁 Substitution"],
-  [64, "🔶 Yellow card"],
-  [69, "🔴 Red card"],
-  [70, "🔁 Substitution"],
-  [72, "🔁 Substitution"],
-  [76, "⚽️ GOAL"],
-  [80, "⚽️ GOAL"],
-  [92, "🔶 Yellow card"],
+    [17, "⚽️ GOAL"],
+    [36, "🔁 Substitution"],
+    [47, "⚽️ GOAL"],
+    [61, "🔁 Substitution"],
+    [64, "🔶 Yellow card"],
+    [69, "🔴 Red card"],
+    [70, "🔁 Substitution"],
+    [72, "🔁 Substitution"],
+    [76, "⚽️ GOAL"],
+    [80, "⚽️ GOAL"],
+    [92, "🔶 Yellow card"],
 ]);
 
 const uniqueEventsSet = new Set(gameEvents.values());
@@ -345,9 +345,9 @@ console.log(uniqueEventsArr);
 gameEvents.delete(64);
 console.log(gameEvents);
 console.log(
-  `An event happened, on average, every ${90 / gameEvents.size} minutes`
+    `An event happened, on average, every ${90 / gameEvents.size} minutes`
 );
 
 for (const [t, ev] of gameEvents.entries()) {
-  console.log(t, ev);
+    console.log(t, ev);
 }
