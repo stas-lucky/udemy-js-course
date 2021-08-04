@@ -208,6 +208,15 @@ btnSort.addEventListener("click", function (e) {
     displayMovements(currentAccount.movements, sorting);
 });
 
+labelBalance.addEventListener("click", function () {
+    console.log(document.querySelectorAll(".movements__value"));
+    const movemnetsUI = Array.from(
+        document.querySelectorAll(".movements__value"),
+        (el) => el.textContent.replace(" EUR", "")
+    );
+    console.log(movemnetsUI);
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
