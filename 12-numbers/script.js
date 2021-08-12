@@ -191,9 +191,10 @@ const updateUI = function (acc) {
 
 ///////////////////////////////////////
 // Event handlers
-let currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+let currentAccount; // = account1;
+let timer;
+//updateUI(currentAccount);
+//containerApp.style.opacity = 100;
 
 btnLogin.addEventListener("click", function (e) {
     // Prevent form from submitting
@@ -229,10 +230,33 @@ btnLogin.addEventListener("click", function (e) {
         inputLoginUsername.value = inputLoginPin.value = "";
         inputLoginPin.blur();
 
+        startTimer();
+
         // Update UI
         updateUI(currentAccount);
     }
 });
+
+const startTimer = function () {
+    if (timer) clearInterval(timer);
+
+    const tick = function () {
+        const min = String(Math.trunc(timeout / 60)).padStart(2, "0");
+        const sec = String(timeout % 60).padStart(2, "0");
+        labelTimer.textContent = `${min}:${sec}`;
+
+        if (timeout === 0) {
+            clearInterval(timer);
+            labelWelcome.textContent = "Log in to get started";
+            containerApp.style.opacity = 0;
+        }
+
+        timeout--;
+    };
+    var timeout = 30;
+    tick();
+    timer = setInterval(tick, 1000);
+};
 
 btnTransfer.addEventListener("click", function (e) {
     e.preventDefault();
@@ -257,6 +281,8 @@ btnTransfer.addEventListener("click", function (e) {
 
         // Update UI
         updateUI(currentAccount);
+
+        startTimer();
     }
 });
 
@@ -269,14 +295,17 @@ btnLoan.addEventListener("click", function (e) {
         amount > 0 &&
         currentAccount.movements.some((mov) => mov >= amount * 0.1)
     ) {
-        // Add movement
-        currentAccount.movements.push(amount);
-        currentAccount.movementsDates.push(new Date().toISOString());
+        setInterval(() => {
+            currentAccount.movements.push(amount);
+            currentAccount.movementsDates.push(new Date().toISOString());
 
-        // Update UI
-        updateUI(currentAccount);
+            // Update UI
+            updateUI(currentAccount);
+        }, 2500);
+        // Add movement
     }
     inputLoanAmount.value = "";
+    startTimer();
 });
 
 btnClose.addEventListener("click", function (e) {
