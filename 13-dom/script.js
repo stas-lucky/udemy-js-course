@@ -35,30 +35,39 @@ document.addEventListener("keydown", function (e) {
     }
 });
 
-console.log(document.documentElement);
-console.log(document.head);
-console.log(document.body);
+// console.log(document.documentElement);
+// console.log(document.head);
+// console.log(document.body);
 
-const header = document.querySelector(".header");
-const allSections = document.querySelectorAll(".section");
-console.log(allSections);
+// const header = document.querySelector(".header");
+// const allSections = document.querySelectorAll(".section");
+// console.log(allSections);
 
-document.getElementById("section--1");
-const allButtons = document.getElementsByTagName("button");
-console.log(allButtons);
+// document.getElementById("section--1");
+// const allButtons = document.getElementsByTagName("button");
+// console.log(allButtons);
 
-console.log(document.getElementsByClassName("btn"));
+// console.log(document.getElementsByClassName("btn"));
 
-const message = document.createElement("div");
-message.classList.add("cookie-message");
-message.textContent = "We use cookies";
-message.innerHTML =
-    "We use cookies <button class='btn btn--close-cookie'>Got it!</button>";
-header.after(message);
-//header.append(message.cloneNode(true));
+// const message = document.createElement("div");
+// message.classList.add("cookie-message");
+// message.textContent = "We use cookies";
+// message.innerHTML =
+//     "We use cookies <button class='btn btn--close-cookie'>Got it!</button>";
+// header.after(message);
+// //header.append(message.cloneNode(true));
 
-document
-    .querySelector(".btn--close-cookie")
-    .addEventListener("click", function () {
-        message.remove();
-    });
+// document
+//     .querySelector(".btn--close-cookie")
+//     .addEventListener("click", function () {
+//         message.remove();
+//     });
+
+
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
+btnScrollTo.addEventListener("click", function(){
+    const s1coords = section1.getBoundingClientRect();
+    console.log(s1coords);
+});
