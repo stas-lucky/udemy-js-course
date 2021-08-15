@@ -138,27 +138,27 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
 });
 
 const h1 = document.querySelector("h1");
-console.log(h1.querySelectorAll(".highlight"));
-console.log(h1.childNodes);
-console.log(h1.children);
+// console.log(h1.querySelectorAll(".highlight"));
+// console.log(h1.childNodes);
+// console.log(h1.children);
 
-console.log(h1.parentNode);
-console.log(h1.parentElement);
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
 
-h1.closest(".header").style.background = "var(--gradient-secondary)";
+// h1.closest(".header").style.background = "var(--gradient-secondary)";
 
-h1.closest("h1").style.background = "var(--gradient-primary)";
+// h1.closest("h1").style.background = "var(--gradient-primary)";
 
-console.log(h1.previousElementSibling);
-console.log(h1.nextElementSibling);
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
 
-console.log(h1.previousSibling);
-console.log(h1.nextSibling);
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
 
-console.log(h1.parentElement.children);
-[...h1.parentElement.children].forEach(function (el) {
-    if (el !== h1) el.style.transform = "scale(0.5)";
-});
+// console.log(h1.parentElement.children);
+// [...h1.parentElement.children].forEach(function (el) {
+//     if (el !== h1) el.style.transform = "scale(0.5)";
+// });
 
 const tabs = document.querySelectorAll(".operations__tab");
 const tabsContainer = document.querySelector(".operations__tab-container");
@@ -182,3 +182,70 @@ tabsContainer.addEventListener("click", function (e) {
             .classList.add("operations__content--active");
     }
 });
+
+const nav = document.querySelector(".nav");
+
+const handleHover = function (e) {
+    // console.log(this, e.currentTarget);
+    if (e.target.classList.contains("nav__link")) {
+        const link = e.target;
+        const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+        const logo = link.closest(".nav").querySelector("img");
+        siblings.forEach((el) => {
+            if (el !== link) el.style.opacity = this;
+        });
+        logo.style.opacity = this;
+    }
+};
+
+// nav.addEventListener("mouseover", function (e) {
+//     handleHover(e, 0.5);
+// });
+
+// nav.addEventListener("mouseout", function (e) {
+//     handleHover(e, 1);
+// });
+
+nav.addEventListener("mouseover", handleHover.bind(0.5));
+nav.addEventListener("mouseout", handleHover.bind(1));
+
+const initialCoords = section1.getBoundingClientRect();
+console.log(initialCoords);
+
+// document.addEventListener("scroll", function () {
+//     console.log(window.scrollY);
+
+//     if (window.scrollY > initialCoords.top) nav.classList.add("sticky");
+//     else nav.classList.remove("sticky");
+// });
+
+// const obsCallback = function (entries, observer) {
+//     entries.forEach((entry) => {
+
+//     });
+// };
+
+// const obsOptions = {
+//     root: null,
+//     threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+
+const header = document.querySelector(".header");
+
+const stickyNav = function (entries) {
+    const [entry] = entries;
+    console.log(entry);
+
+    if (!entry.isIntersecting) nav.classList.add("sticky");
+    else nav.classList.remove("sticky");
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+    root: null,
+    threshold: 0,
+    rootMargin: `-${nav.getBoundingClientRect().height}px`,
+});
+headerObserver.observe(header);
