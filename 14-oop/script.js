@@ -334,3 +334,99 @@ StudentProto.init = function (fullName, birthYear, course) {
 const jay = Object.create(StudentProto);
 jay.init("Jay", 2010, "CS");
 jay.calcAge();
+
+///////////////////////////////////////
+// Coding Challenge #4
+
+/* 
+1. Re-create challenge #3, but this time using ES6 classes: create an 'EVCl' child class of the 'CarCl' class
+2. Make the 'charge' property private;
+3. Implement the ability to chain the 'accelerate' and 'chargeBattery' methods of this class, and also update the 'brake' method in the 'CarCl' class. They experiment with chining!
+
+DATA CAR 1: 'Rivian' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+
+
+*/
+
+class CarCl {
+    constructor(make, speed) {
+        this.make = make;
+        this.speed = speed;
+    }
+
+    accelerate() {
+        this.speed += 10;
+        console.log(`${this.make} is going at ${this.speed} km/h`);
+        return this;
+    }
+
+    brake() {
+        this.speed -= 5;
+        console.log(`${this.make} is going at ${this.speed} km/h`);
+        return this;
+    }
+
+    get speedUS() {
+        return this.speed / 1.6;
+    }
+
+    set speedUS(speed) {
+        this.speed = speed * 1.6;
+    }
+}
+
+class EVCl extends CarCl {
+    #charge;
+
+    constructor(make, speed, charge) {
+        super(make, speed);
+        this.#charge = charge;
+    }
+
+    chargeBattery(chargeTo) {
+        this.charge = chargeTo;
+        return this;
+    }
+
+    accelerate() {
+        this.speed += 20;
+        this.#charge--;
+        console.log(
+            `${this.make} goint at ${this.speed} km/h, with charge of ${
+                this.#charge
+            }`
+        );
+        return this;
+    }
+}
+
+const tesla1 = new EVCl("Tesla", 80, 30);
+tesla1.chargeBattery(50).accelerate().accelerate().brake().brake().brake();
+console.log(tesla1.speedUS);
+
+//tesla1.#charge = 50;
+
+/*
+
+const EV = function (make, speed, charge) {
+    Car.call(this, make, speed);
+    this.charge = charge;
+};
+
+EV.prototype = Object.create(Car.prototype);
+EV.prototype.constructor = Car;
+
+EV.prototype.chargeBattery = function (chargeTo) {
+    this.charge = chargeTo;
+};
+
+EV.prototype.accelerate = function () {
+    this.speed += 20;
+    this.charge--;
+    console.log(
+        `${this.make} goint at ${this.speed} km/h, with charge of ${this.charge}`
+    );
+};
+*/
