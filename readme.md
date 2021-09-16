@@ -14,3 +14,7 @@
 
 - To install run `npm install live-server -g`
 - Then run `live-server`
+
+**Parcel**
+
+- Parcel installation `npm i parcel `
