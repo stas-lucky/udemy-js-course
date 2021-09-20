@@ -16,6 +16,38 @@ export default class View {
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 
+  update(data) {
+    // if (!data || (Array.isArray(data) && data.length === 0))
+    //   return this.renderError();
+    this._data = data;
+    const newMarkup = this._generateMarkup();
+    const newDOM = document.createRange().createContextualFragment(newMarkup);
+    const newElements = Array.from(newDOM.querySelectorAll("*"));
+    const curElements = Array.from(this._parentElement.querySelectorAll("*"));
+    console.log(curElements);
+    console.log(newElements);
+    newElements.forEach((newEl, i) => {
+      console.log("==========================================");
+      const curEl = curElements[i];
+      console.log(curEl, newEl.isEqualNode(curEl));
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild.nodeValue.trim() !== ""
+      ) {
+        // Only update those that have text. Link: https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeValue
+        console.log("BLA!!!", newEl.firstChild?.nodeValue.trim());
+        curEl.textContent = newEl.textContent;
+      }
+
+      if (!newEl.isEqualNode(curEl)) {
+        console.log(Array.from(newEl.attributes));
+        Array.from(newEl.attributes).forEach((attr) =>
+          curEl.setAttribute(attr.name, attr.value)
+        );
+      }
+    });
+  }
+
   renderSpinner() {
     const markup = `
       <div class="spinner">

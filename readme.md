@@ -1,9 +1,9 @@
-**Extentions**:
+**Extensions**:
 
-- TODO Higllight
+- TODO Highlight
   ` "todohighlight.isCaseSensitive": true,"todohighlight.keywords": [ { "text": "BUG", "color": "#333", "backgroundColor": "#3498db" }, { "text": "FIXME", "color": "#333", "backgroundColor": "yellow" } ],`
 - Settings Sync
-- Install "Pretier - code fomatter" extenstion
+- Install "Prettier - code formatter" extension
 
 **Settings**:
 

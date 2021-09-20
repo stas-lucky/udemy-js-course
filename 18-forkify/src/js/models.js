@@ -14,9 +14,8 @@ export const state = {
 
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(
-      `${API_URL}${id}?key=febf3200-d721-4b6f-8128-222090872beb`
-    );
+    // key=febf3200-d721-4b6f-8128-222090872beb
+    const data = await getJSON(`${API_URL}${id}`);
 
     let { recipe } = data.data;
     state.recipe = {
@@ -39,10 +38,8 @@ export const loadRecipe = async function (id) {
 export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
-    const data = await getJSON(
-      `${API_URL}?search=${query}&key=febf3200-d721-4b6f-8128-222090872beb`
-    );
-    console.log(data);
+    const data = await getJSON(`${API_URL}?search=${query}`);
+    //console.log(data);
 
     state.search.results = data.data.recipes.map((rec) => {
       return {
@@ -52,9 +49,10 @@ export const loadSearchResults = async function (query) {
         image: rec.image_url,
       };
     });
-  } catch (error) {
+    state.search.page = 1; // Start again from page 1
+  } catch (err) {
     console.error(`ERROR: ${err}`);
-    throw error;
+    throw err;
   }
 };
 
@@ -65,6 +63,13 @@ export const getSearchResultsPage = function (page = state.search.page) {
   return state.search.results.slice(start, end);
 };
 
+export const updateServings = function (newServings) {
+  state.recipe.ingredients.forEach((ing) => {
+    ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
+  });
+
+  state.recipe.servings = newServings;
+};
 //loadSearchResults("pizza");
 
 /*
@@ -72,4 +77,4 @@ id: "5ed6604591c37cdc054bcd09"
 image: "http://forkify-api.herokuapp.com/images/BBQChickenPizzawithCauliflowerCrust5004699695624ce.jpg"
 publisher: "Closet Cooking"
 title: "Cauliflower Pizza Crust (with BBQ Chicken Pizza)"
-*/
+*/ files: exclude;

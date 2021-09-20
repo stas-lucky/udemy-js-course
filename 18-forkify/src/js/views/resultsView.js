@@ -17,9 +17,14 @@ class ResultsView extends View {
     publisher: "Closet Cooking"
     title: "Cauliflower Pizza Crust (with BBQ Chicken Pizza)"
     */
+
+    const id = window.location.hash.slice(1);
+
     return `
     <li class="preview">
-      <a class="preview__link preview__link--active" href="#${elm.id}">
+      <a class="preview__link ${
+        elm.id === id ? "preview__link--active" : ""
+      }" href="#${elm.id}">
         <figure class="preview__fig">
           <img src="${elm.image}" alt="${elm.title}" />
         </figure>
