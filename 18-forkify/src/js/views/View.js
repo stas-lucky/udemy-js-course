@@ -6,12 +6,13 @@ export default class View {
   _message = "Message";
   _errorMessage = "We couldn't find that recipe. Please try another one!";
 
-  render(data) {
+  render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
 
     this._data = data;
     const markup = this._generateMarkup();
+    if (!render) return markup;
     this._clear();
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
@@ -24,23 +25,24 @@ export default class View {
     const newDOM = document.createRange().createContextualFragment(newMarkup);
     const newElements = Array.from(newDOM.querySelectorAll("*"));
     const curElements = Array.from(this._parentElement.querySelectorAll("*"));
-    console.log(curElements);
-    console.log(newElements);
+    //console.log(curElements);
+    //console.log(newElements);
     newElements.forEach((newEl, i) => {
-      console.log("==========================================");
+      //console.log("==========================================");
       const curEl = curElements[i];
-      console.log(curEl, newEl.isEqualNode(curEl));
+      //console.log(curEl, newEl.isEqualNode(curEl));
       if (
         !newEl.isEqualNode(curEl) &&
+        newEl.firstChild &&
         newEl.firstChild.nodeValue.trim() !== ""
       ) {
         // Only update those that have text. Link: https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeValue
-        console.log("BLA!!!", newEl.firstChild?.nodeValue.trim());
+        // console.log("BLA!!!", newEl.firstChild?.nodeValue.trim());
         curEl.textContent = newEl.textContent;
       }
 
       if (!newEl.isEqualNode(curEl)) {
-        console.log(Array.from(newEl.attributes));
+        // console.log(Array.from(newEl.attributes));
         Array.from(newEl.attributes).forEach((attr) =>
           curEl.setAttribute(attr.name, attr.value)
         );

@@ -1,3 +1,4 @@
+//import { set } from "core-js/core/dict";
 import "regenerator-runtime/runtime";
 import { API_URL, RES_PER_PAGE } from "./config";
 import { getJSON } from "./helpers";
@@ -10,6 +11,7 @@ export const state = {
     resultsPerPage: RES_PER_PAGE,
     page: 1,
   },
+  bookmarks: [],
 };
 
 export const loadRecipe = async function (id) {
@@ -28,6 +30,12 @@ export const loadRecipe = async function (id) {
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients,
     };
+    if (state.bookmarks.some((b) => b.id === id)) {
+      state.recipe.bookmarked = true;
+    } else {
+      state.recipe.bookmarked = false;
+    }
+
     console.log(state.recipe);
   } catch (err) {
     console.error(`ERROR: ${err}`);
@@ -70,6 +78,40 @@ export const updateServings = function (newServings) {
 
   state.recipe.servings = newServings;
 };
+
+const presistBookmarks = function () {
+  localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+};
+
+export const addBookmark = function (recipe) {
+  state.bookmarks.push(recipe);
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+  presistBookmarks();
+};
+
+export const deleteBookmark = function (id) {
+  const index = state.bookmarks.findIndex((el) => el.id === id);
+  state.bookmarks.splice(index, 1);
+  // NOT bookmarked anymore
+  if (id === state.recipe.id) state.recipe.bookmarked = false;
+  presistBookmarks();
+};
+
+const init = function () {
+  const storage = localStorage.getItem("bookmarks");
+  if (storage) state.bookmarks = JSON.parse(storage);
+};
+
+init();
+
+const clearBookmarks = function () {
+  // Only for debugging
+  localStorage.clear("bookmarks");
+};
+// clearBookmarks();
+
+// console.log(state.bookmarks);
+
 //loadSearchResults("pizza");
 
 /*
