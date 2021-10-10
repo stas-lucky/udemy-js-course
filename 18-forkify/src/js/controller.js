@@ -10,8 +10,8 @@ import paginationView from "./views/paginationView.js";
 import addRecipeView from "./views/addRecipeView.js";
 import { MODAL_CLOSE_SEC } from "./config.js";
 
-let val = null;
-console.log(!val);
+//let val = null;
+//console.log(!val);
 
 const controlRecipes = async function () {
   try {

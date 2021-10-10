@@ -1,6 +1,7 @@
 .vscode/**
 node_modules
 dist
+dist_prod
 package-lock.json
 .parcel-cache
 .idea
